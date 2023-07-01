@@ -83,7 +83,7 @@ class PlaylistSongAssoc(View):
         if assoc == "remove":
             Playlist.objects.get(pk=pk).songs.remove(song_pk)
         if assoc == "add":
-            Playlist.ojbects.get(pk=pk).songs.add(song_pk)
+            Playlist.objects.get(pk=pk).songs.add(song_pk)
         return redirect('home')
 
 
