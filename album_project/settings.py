@@ -73,7 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'album_project.wsgi.application'
 
-CORS_ALLOW_ALL_ORIGINS = TRUE
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
