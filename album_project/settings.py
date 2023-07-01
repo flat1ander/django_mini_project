@@ -1,6 +1,7 @@
 
 import os
 from pathlib import Path
+import dj_database_url
 
 
 import environ
@@ -16,12 +17,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=2=gp$dqcy@(c#^3clt8)hnmvg7w()5)9swprvikj+4=0hj4d!'
+SECRET_KEY = os.environ.get("SECRET_KEY", "fdlkjlkjdflkj")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
@@ -34,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main_app',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -66,20 +73,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'album_project.wsgi.application'
 
+CORS_ALLOW_ALL_ORIGINS = TRUE
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#   'default': {
+#     'ENGINE': 'django.db.backends.postgresql',
+#     'NAME': 'django_mini_project',
+#     'USER': os.environ.get('DB_USER'),
+#     'PASSWORD': os.environ.get('DB_PW'),
+#     'HOST': os.environ.get('DB_HOST'),
+#     'PORT': '5432',
+#   }
+# }
+
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'django_mini_project',
-    'USER': os.environ.get('DB_USER'),
-    'PASSWORD': os.environ.get('DB_PW'),
-    'HOST': os.environ.get('DB_HOST'),
-    'PORT': '5432',
-  }
+    'default': dj_database_url.config(
+        conn_max_age=600,
+        conn_health_checks=True,
+    ),
 }
+
+
+
 
 
 # Password validation
