@@ -90,11 +90,17 @@ CORS_ALLOW_ALL_ORIGINS = True
 #   }
 # }
 
+DB_USER = os.getenv('DB_USER')
+DB_PW = os.getenv('DB_PW')
+DB_HOST = os.getenv('DB_HOST')
+
+
 DATABASES = {
     'default': dj_database_url.config(
+        default=f'postgres://{DB_USER}:{DB_PW}@{DB_HOST}:5432/django_mini_project',
         conn_max_age=600,
         conn_health_checks=True,
-    ),
+    )
 }
 
 
