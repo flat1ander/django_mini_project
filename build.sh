@@ -1,8 +1,8 @@
 #Install Dependencies
-pip install -r deps.txt
+pip3 install -r deps.txt
 
 #collect static files
-python manage.py collectstatic --no-input
+python3 manage.py collectstatic --no-input
 
 # Run Migrations
 python3 manage.py migrate

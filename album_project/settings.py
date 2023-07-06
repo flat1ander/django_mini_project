@@ -82,7 +82,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 # DATABASES = {
 #   'default': {
 #     'ENGINE': 'django.db.backends.postgresql',
-#     'NAME': 'django_mini_project',
+#     'NAME': 'album_project',
 #     'USER': os.environ.get('DB_USER'),
 #     'PASSWORD': os.environ.get('DB_PW'),
 #     'HOST': os.environ.get('DB_HOST'),
@@ -90,21 +90,13 @@ CORS_ALLOW_ALL_ORIGINS = True
 #   }
 # }
 
-DB_USER = os.getenv('DB_USER')
-DB_PW = os.getenv('DB_PW')
-DB_HOST = os.getenv('DB_HOST')
-
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=f'postgres://{DB_USER}:{DB_PW}@{DB_HOST}:5432/django_mini_project',
         conn_max_age=600,
         conn_health_checks=True,
     )
 }
-
-
-
 
 
 # Password validation
@@ -144,4 +136,8 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '/main_app/static/styles/')
+STATIC_ROOT = os.path.join(BASE_DIR, '/main_app/static')
+
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
