@@ -144,4 +144,4 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, '/Users/matthewlane/Documents/SEIR-CARINA/unit4/django_mini_project/main_app/static/styles/')
+STATIC_ROOT = os.path.join(BASE_DIR, '/main_app/static/styles/')
